@@ -68,4 +68,21 @@ export class Rover {
         break;
     }
   }
+
+  turnLeft() {
+    switch (this.position.direction) {
+      case Direction.NORTH:
+        this.position.direction = Direction.WEST;
+        break;
+      case Direction.SOUTH:
+        this.position.direction = Direction.EAST;
+        break;
+      case Direction.EAST:
+        this.position.direction = Direction.NORTH;
+        break;
+      case Direction.WEST:
+        this.position.direction = Direction.SOUTH;
+        break;
+    }
+  }
 }

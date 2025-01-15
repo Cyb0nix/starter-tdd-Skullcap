@@ -75,5 +75,29 @@ describe("rover", () => {
         rover.turnRight();
         expect(rover.position).toEqual({ direction: Direction.NORTH, x: 0, y: 0 });
     });
+
+    test("should be able to turn left when facing North", () => {
+        const rover = new Rover(new Position(0, 0, Direction.NORTH));
+        rover.turnLeft();
+        expect(rover.position).toEqual({ direction: Direction.WEST, x: 0, y: 0 });
+    });
+
+    test("should be able to turn left when facing South", () => {
+        const rover = new Rover(new Position(0, 0, Direction.SOUTH));
+        rover.turnLeft();
+        expect(rover.position).toEqual({ direction: Direction.EAST, x: 0, y: 0 });
+    });
+
+    test("should be able to turn left when facing East", () => {
+        const rover = new Rover(new Position(0, 0, Direction.EAST));
+        rover.turnLeft();
+        expect(rover.position).toEqual({ direction: Direction.NORTH, x: 0, y: 0 });
+    });
+
+    test("should be able to turn left when facing West", () => {
+        const rover = new Rover(new Position(0, 0, Direction.WEST));
+        rover.turnLeft();
+        expect(rover.position).toEqual({ direction: Direction.SOUTH, x: 0, y: 0 });
+    });
 });
     
