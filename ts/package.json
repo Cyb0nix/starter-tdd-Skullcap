@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "hello": "file:",
     "typescript": "^4.9.5"
   },
   "devDependencies": {
