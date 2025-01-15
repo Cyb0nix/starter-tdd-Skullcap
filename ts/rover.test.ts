@@ -1,103 +1,65 @@
 import { describe, test, expect } from "@jest/globals";
 import { Rover } from "./rover";
-import { Position } from "./position";
-import { Direction } from "./direction";
+import { Position } from "./position.enum";
+import { Direction } from "./direction.enum";
+import { Movement } from "./movement.enum";
+import { Side } from "./side.enum";
 
 describe("rover", () => {
-    test("should be able to Moving forward when facing North", () => {
-        const rover = new Rover(new Position(0, 0, Direction.NORTH));
-        rover.moveForward();
-        expect(rover.position).toEqual({ direction: Direction.NORTH, x: 0, y: 1 });
+  const directions = [
+    {
+      direction: Direction.NORTH,
+      forward: { x: 0, y: 1 },
+      backward: { x: 0, y: -1 },
+      right: Direction.EAST,
+      left: Direction.WEST,
+    },
+    {
+      direction: Direction.SOUTH,
+      forward: { x: 0, y: -1 },
+      backward: { x: 0, y: 1 },
+      right: Direction.WEST,
+      left: Direction.EAST,
+    },
+    {
+      direction: Direction.EAST,
+      forward: { x: 1, y: 0 },
+      backward: { x: -1, y: 0 },
+      right: Direction.SOUTH,
+      left: Direction.NORTH,
+    },
+    {
+      direction: Direction.WEST,
+      forward: { x: -1, y: 0 },
+      backward: { x: 1, y: 0 },
+      right: Direction.NORTH,
+      left: Direction.SOUTH,
+    },
+  ];
+
+  directions.forEach(({ direction, forward, backward, right, left }) => {
+    test(`should be able to move forward when facing ${Direction[direction]}`, () => {
+      const rover = new Rover(new Position(0, 0, direction));
+      rover.move(Movement.FORWARD);
+      expect(rover.position).toEqual({ direction, ...forward });
     });
 
-    test("should be able to Moving forward when facing South", () => {
-        const rover = new Rover(new Position(0, 0, Direction.SOUTH));
-        rover.moveForward();
-        expect(rover.position).toEqual({ direction: Direction.SOUTH, x: 0, y: -1 });
+    test(`should be able to move backward when facing ${Direction[direction]}`, () => {
+      const rover = new Rover(new Position(0, 0, direction));
+      rover.move(Movement.BACKWARD);
+      expect(rover.position).toEqual({ direction, ...backward });
     });
 
-    test("should be able to Moving forward when facing East", () => {
-        const rover = new Rover(new Position(0, 0, Direction.EAST));
-        rover.moveForward();
-        expect(rover.position).toEqual({ direction: Direction.EAST, x: 1, y: 0 });
+    test(`should be able to turn right when facing ${Direction[direction]}`, () => {
+      const rover = new Rover(new Position(0, 0, direction));
+      rover.turn(Side.RIGHT);
+      expect(rover.position).toEqual({ direction: right, x: 0, y: 0 });
     });
 
-    test("should be able to Moving forward when facing West", () => {
-        const rover = new Rover(new Position(0, 0, Direction.WEST));
-        rover.moveForward();
-        expect(rover.position).toEqual({ direction: Direction.WEST, x: -1, y: 0 });
+    test(`should be able to turn left when facing ${Direction[direction]}`, () => {
+      const rover = new Rover(new Position(0, 0, direction));
+      rover.turn(Side.LEFT);
+      expect(rover.position).toEqual({ direction: left, x: 0, y: 0 });
     });
-
-    test("should be able to Moving backward when facing North", () => {
-        const rover = new Rover(new Position(0, 0, Direction.NORTH));
-        rover.moveBackward();
-        expect(rover.position).toEqual({ direction: Direction.NORTH, x: 0, y: -1 });
-    });
-
-    test("should be able to Moving backward when facing South", () => {
-        const rover = new Rover(new Position(0, 0, Direction.SOUTH));
-        rover.moveBackward();
-        expect(rover.position).toEqual({ direction: Direction.SOUTH, x: 0, y: 1 });
-    });
-
-    test("should be able to Moving backward when facing East", () => {
-        const rover = new Rover(new Position(0, 0, Direction.EAST));
-        rover.moveBackward();
-        expect(rover.position).toEqual({ direction: Direction.EAST, x: -1, y: 0 });
-    });
-
-    test("should be able to Moving backward when facing West", () => {
-        const rover = new Rover(new Position(0, 0, Direction.WEST));
-        rover.moveBackward();
-        expect(rover.position).toEqual({ direction: Direction.WEST, x: 1, y: 0 });
-    });
-
-    test("should be able to turn right when facing North", () => {
-        const rover = new Rover(new Position(0, 0, Direction.NORTH));
-        rover.turnRight();
-        expect(rover.position).toEqual({ direction: Direction.EAST, x: 0, y: 0 });
-    });
-
-    test("should be able to turn right when facing South", () => {
-        const rover = new Rover(new Position(0, 0, Direction.SOUTH));
-        rover.turnRight();
-        expect(rover.position).toEqual({ direction: Direction.WEST, x: 0, y: 0 });
-    });
-
-    test("should be able to turn right when facing East", () => {
-        const rover = new Rover(new Position(0, 0, Direction.EAST));
-        rover.turnRight();
-        expect(rover.position).toEqual({ direction: Direction.SOUTH, x: 0, y: 0 });
-    });
-
-    test("should be able to turn right when facing West", () => {
-        const rover = new Rover(new Position(0, 0, Direction.WEST));
-        rover.turnRight();
-        expect(rover.position).toEqual({ direction: Direction.NORTH, x: 0, y: 0 });
-    });
-
-    test("should be able to turn left when facing North", () => {
-        const rover = new Rover(new Position(0, 0, Direction.NORTH));
-        rover.turnLeft();
-        expect(rover.position).toEqual({ direction: Direction.WEST, x: 0, y: 0 });
-    });
-
-    test("should be able to turn left when facing South", () => {
-        const rover = new Rover(new Position(0, 0, Direction.SOUTH));
-        rover.turnLeft();
-        expect(rover.position).toEqual({ direction: Direction.EAST, x: 0, y: 0 });
-    });
-
-    test("should be able to turn left when facing East", () => {
-        const rover = new Rover(new Position(0, 0, Direction.EAST));
-        rover.turnLeft();
-        expect(rover.position).toEqual({ direction: Direction.NORTH, x: 0, y: 0 });
-    });
-
-    test("should be able to turn left when facing West", () => {
-        const rover = new Rover(new Position(0, 0, Direction.WEST));
-        rover.turnLeft();
-        expect(rover.position).toEqual({ direction: Direction.SOUTH, x: 0, y: 0 });
-    });
+  });
 });
-    

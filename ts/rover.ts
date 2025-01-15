@@ -1,5 +1,8 @@
-import { Direction } from './direction';
-import { Position } from './position';
+import { Direction } from "./direction.enum";
+import { Movement } from "./movement.enum";
+import { Position } from "./position.enum";
+import { Side } from "./side.enum";
+import { Command } from "./command.enum";
 
 export class Rover {
   position: Position;
@@ -8,81 +11,44 @@ export class Rover {
     this.position = position;
   }
 
-  move(commands: Command[]) {
+  executeCommands(commands: Command[]) {
     commands.forEach((command) => {
       switch (command) {
         case Command.FORWARD:
-          this.moveForward();
+          this.move(Movement.FORWARD);
+          break;
+        case Command.BACKWARD:
+          this.move(Movement.BACKWARD);
+          break;
+        case Command.RIGHT:
+          this.turn(Side.RIGHT);
+          break;
+        case Command.LEFT:
+          this.turn(Side.LEFT);
           break;
       }
     });
   }
 
-  moveForward() {
+  move(movement: Movement) {
     switch (this.position.direction) {
       case Direction.NORTH:
-        this.position.y++;
+        this.position.y += movement;
         break;
       case Direction.SOUTH:
-        this.position.y--;
+        this.position.y -= movement;
         break;
       case Direction.EAST:
-        this.position.x++;
+        this.position.x += movement;
         break;
       case Direction.WEST:
-        this.position.x--;
+        this.position.x -= movement;
         break;
     }
   }
 
-  moveBackward() {
-    switch (this.position.direction) {
-      case Direction.NORTH:
-        this.position.y--;
-        break;
-      case Direction.SOUTH:
-        this.position.y++;
-        break;
-      case Direction.EAST:
-        this.position.x--;
-        break;
-      case Direction.WEST:
-        this.position.x++;
-        break;
-    }
-  }
-
-  turnRight() {
-    switch (this.position.direction) {
-      case Direction.NORTH:
-        this.position.direction = Direction.EAST;
-        break;
-      case Direction.SOUTH:
-        this.position.direction = Direction.WEST;
-        break;
-      case Direction.EAST:
-        this.position.direction = Direction.SOUTH;
-        break;
-      case Direction.WEST:
-        this.position.direction = Direction.NORTH;
-        break;
-    }
-  }
-
-  turnLeft() {
-    switch (this.position.direction) {
-      case Direction.NORTH:
-        this.position.direction = Direction.WEST;
-        break;
-      case Direction.SOUTH:
-        this.position.direction = Direction.EAST;
-        break;
-      case Direction.EAST:
-        this.position.direction = Direction.NORTH;
-        break;
-      case Direction.WEST:
-        this.position.direction = Direction.SOUTH;
-        break;
-    }
+  turn(side: Side) {
+    this.position.direction += side + 360;
+    this.position.direction %= 360;
   }
 }

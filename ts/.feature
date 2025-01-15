@@ -151,3 +151,9 @@ Given A rover with position (x=0, y=0) facing West
 When rover turns left
 
 Then The Rover position is (x=0, y=0) facing South
+
+
+Feature: Move and turn together
+
+Scenario: Move and turn together
+
