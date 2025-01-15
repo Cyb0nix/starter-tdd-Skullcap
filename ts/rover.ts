@@ -34,4 +34,21 @@ export class Rover {
         break;
     }
   }
+
+  moveBackward() {
+    switch (this.position.direction) {
+      case Direction.NORTH:
+        this.position.y--;
+        break;
+      case Direction.SOUTH:
+        this.position.y++;
+        break;
+      case Direction.EAST:
+        this.position.x--;
+        break;
+      case Direction.WEST:
+        this.position.x++;
+        break;
+    }
+  }
 }
