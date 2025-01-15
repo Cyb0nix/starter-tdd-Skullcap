@@ -21,5 +21,11 @@ describe("rover", () => {
         rover.moveForward();
         expect(rover.position).toEqual({ direction: Direction.EAST, x: 1, y: 0 });
     });
+
+    test("should be able to Moving forward when facing West", () => {
+        const rover = new Rover(new Position(0, 0, Direction.WEST));
+        rover.moveForward();
+        expect(rover.position).toEqual({ direction: Direction.WEST, x: -1, y: 0 });
+    });
 });
     

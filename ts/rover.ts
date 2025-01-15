@@ -29,6 +29,9 @@ export class Rover {
       case Direction.EAST:
         this.position.x++;
         break;
+      case Direction.WEST:
+        this.position.x--;
+        break;
     }
   }
 }

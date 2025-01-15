@@ -24,3 +24,11 @@ Given A rover with position (x=0, y=0) facing East
 When rover goes forward
 
 Then The Rover position is (x=1, y=0) facing East
+
+Scenario: Moving forward when facing West
+
+Given A rover with position (x=0, y=0) facing West
+
+When rover goes forward
+
+Then The Rover position is (x=-1, y=0) facing West
